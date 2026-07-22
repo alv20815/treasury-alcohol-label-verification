@@ -9,12 +9,12 @@
 
 No local installation or Oracle APEX account is required to test the deployed prototype.
 
-1. Open the deployed application.
-2. Start with **Demo label scenarios** to see repeatable PASS, FAIL, and REVIEW outcomes.
-3. Run the **single-label**, **batch**, or **Live Test** workflow.
+1. Open the deployed application, complete the brief cover prompt, and enter the test prototype.
+2. Use the **Reviewer Guide** to download the supplied test images, scenario catalog, batch manifests, and ZIP archives.
+3. Start with **Demo label scenarios** to see repeatable PASS, FAIL, and REVIEW outcomes, or run the **single-label**, **batch**, or **Live Test** workflow.
 4. Open a result to review the field-by-field comparison, confidence, explanation, timing, and export options.
 
-Page 6 is the reviewer guide and provides the supplied test images, scenario catalog, batch manifests, and ZIP archive.
+The test files are provided directly inside the deployed prototype, so reviewers do not need to locate an internal APEX page or download them from the source repository.
 
 ## What the prototype does
 
@@ -70,15 +70,16 @@ The repository is intentionally small:
 README.md
 APPROACH_TOOLS_ASSUMPTIONS.md
 f102.sql
+f102_supporting_objects.sql
 ```
 
-`f102.sql` is the current Oracle APEX Application 102 export generated from Oracle APEX 24.2.17. It contains the page definitions, shared components, Static Application Files, and reviewer-facing assets. The Static Application Files are embedded in the export and do not need to be uploaded separately.
+`f102.sql` is the current Oracle APEX Application 102 export generated from Oracle APEX 24.2.17. It contains the page definitions, shared components, Static Application Files, and reviewer-facing assets. `f102_supporting_objects.sql` contains the required `ALV_*` tables, view, configuration, and `ALV_VERIFICATION_PKG` package. The Static Application Files are embedded in the application export and do not need to be uploaded to GitHub separately.
 
 ## Running or importing the application
 
 The recommended evaluation path is the deployed URL above; reviewers do not need to install Oracle APEX or import the application.
 
-For source review, open `f102.sql` directly in GitHub. An Oracle APEX developer can import it through **App Builder -> Import**. The export expects the corresponding `ALV_*` database objects and `ALV_VERIFICATION_PKG` to exist in the target parsing schema. Provider credentials are intentionally excluded from the repository and must remain in a server-side APEX Web Credential.
+For source review, open `f102.sql` and `f102_supporting_objects.sql` directly in GitHub. To reproduce the application, an Oracle APEX developer should first run `f102_supporting_objects.sql` through **SQL Workshop -> SQL Scripts**, then import `f102.sql` through **App Builder -> Import**. Provider credentials are intentionally excluded from the repository and must remain in a server-side APEX Web Credential.
 
 ## Live-provider configuration
 
