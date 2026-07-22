@@ -9,12 +9,15 @@
 
 No local installation or Oracle APEX account is required to test the deployed prototype.
 
-1. Open the deployed application, complete the brief cover prompt, and enter the test prototype.
-2. Use the **Reviewer Guide** to download the supplied test images, scenario catalog, batch manifests, and ZIP archives.
-3. Start with **Demo label scenarios** to see repeatable PASS, FAIL, and REVIEW outcomes, or run the **single-label**, **batch**, or **Live Test** workflow.
-4. Open a result to review the field-by-field comparison, confidence, explanation, timing, and export options.
+1. Open the deployed application, complete the brief cover prompt, and enter the prototype.
+2. Open the **Reviewer Guide** to download the supplied test images, scenario catalog, batch manifests, and ZIP archives.
+3. Start with **Demo label scenarios** for repeatable PASS, FAIL, and REVIEW outcomes, or run the **single-label**, **batch**, or **Live Test** workflow.
+4. Open a result to review the field-by-field comparison, confidence, explanation, processing time, and export options.
 
-The test files are provided directly inside the deployed prototype, so reviewers do not need to locate an internal APEX page or download them from the source repository. For convenience, the test files (ZIP) have also been provided in the GitHub repository (https://github.com/alv20815/treasury-alcohol-label-verification).
+The test assets are available inside the deployed prototype. For convenience, the same six test files are also packaged in these GitHub downloads:
+
+- [`Test Files for Single Label and Live Test.zip`](Test%20Files%20for%20Single%20Label%20and%20Live%20Test.zip)
+- [`Test Files for Batch Test.zip`](Test%20Files%20for%20Batch%20Test.zip)
 
 ## What the prototype does
 
@@ -32,29 +35,29 @@ Field-specific rules allow reasonable case, spacing, punctuation, and unit diffe
 
 The overall decision is:
 
-- **PASS** - all required checks matched;
-- **FAIL** - a required check was missing or materially mismatched; or
-- **REVIEW** - the evidence, confidence, typography, or provider response was not reliable enough for an automatic decision.
+- **PASS** — all required checks matched;
+- **FAIL** — a required check was missing or materially mismatched; or
+- **REVIEW** — the evidence, confidence, typography, or provider response was not reliable enough for an automatic decision.
 
 ## Test workflows
 
 ### Deterministic scenarios
 
-Twenty-three repeatable scenarios cover successful labels, field mismatches, missing data, warning defects, import-country cases, wine/beer ABV applicability, low-quality evidence, uncertain typography, and a non-alcohol control. These scenarios test the comparison engine without depending on an external service.
+Twenty-three repeatable scenarios cover successful labels, field mismatches, missing data, warning defects, import-country cases, wine/beer ABV applicability, low-quality evidence, uncertain typography, and a non-alcohol control. These scenarios exercise the comparison engine without depending on an external service.
 
 ### Single-label verification
 
-The form accepts Application Data and an uploaded image. Reviewers can select a deterministic Demo mode or, when configured, the external provider. Both paths use the same stored comparison and decision logic.
+The reviewer enters Application Data and uploads one label image. The deterministic workflow and configured-provider workflow use the same stored comparison and decision logic.
 
 ### Batch verification
 
-The batch workflow accepts a CSV manifest and ZIP archive. Supplied files support a 23-scenario batch and a 300-row acceptance test with expected totals of **60 PASS, 180 FAIL, and 60 REVIEW**.
+The batch workflow accepts a CSV manifest and ZIP archive. Supplied files support a 23-scenario acceptance batch and a 300-row test with expected totals of **60 PASS, 180 FAIL, and 60 REVIEW**.
 
 ### Live Test
 
-Live Test sends the uploaded image copy and extraction instructions to the configured provider. Expected Application Data is compared locally after extraction. Fast and Balanced profiles resize the upload copy to a maximum long edge of 768 or 1024 pixels; Original detail sends the full image.
+Live Test sends an optimized or original copy of the uploaded image to the configured provider for pixel-based extraction. Expected Application Data is compared locally after extraction. Provider failures and unreliable evidence return **REVIEW** rather than being represented as a successful verification.
 
-Provider failures and unreliable evidence are returned as REVIEW rather than being represented as a successful verification. Use only synthetic or non-sensitive images in the public prototype.
+Use only synthetic or non-sensitive files in the public prototype.
 
 ## Results and exports
 
@@ -64,26 +67,31 @@ Individual results can be printed or exported as XLSX, JSON, or CSV. Batch evide
 
 ## Repository contents
 
-The repository is intentionally small:
-
 ```text
 README.md
 APPROACH_TOOLS_ASSUMPTIONS.md
-f102.zip, which must be extracted to f102.sql before import.
+f102.zip
 f102_supporting_objects.sql
+Test Files for Single Label and Live Test.zip
+Test Files for Batch Test.zip
 ```
 
-`f102.sql` is the current Oracle APEX Application 102 export generated from Oracle APEX 24.2.17. It contains the page definitions, shared components, Static Application Files, and reviewer-facing assets. `f102_supporting_objects.sql` contains the required `ALV_*` tables, view, configuration, and `ALV_VERIFICATION_PKG` package. The Static Application Files are embedded in the application export and do not need to be uploaded to GitHub separately.
+- `f102.zip` contains the current Oracle APEX Application 102 export, including the page definitions, shared components, Static Application Files, and reviewer-facing assets.
+- `f102_supporting_objects.sql` creates the required `ALV_*` tables and view, compiles `ALV_VERIFICATION_PKG`, and seeds non-secret configuration and the 23 deterministic scenarios.
+- The two test ZIP files provide convenient copies of the test assets that are also available from the deployed prototype.
+- Provider secrets are intentionally excluded from the repository.
 
-## Running or importing the application
+## Reproducing the application in Oracle APEX
 
-The recommended evaluation path is the deployed URL above; reviewers do not need to install Oracle APEX or import the application.
+The deployed application is the recommended evaluation path. The following steps are only for developers who want to reproduce the application in another Oracle APEX environment.
 
-For source review, open `f102.sql` and `f102_supporting_objects.sql` directly in GitHub. To reproduce the application, an Oracle APEX developer should first run `f102_supporting_objects.sql` through **SQL Workshop -> SQL Scripts**, then import `f102.sql` through **App Builder -> Import**. Provider credentials are intentionally excluded from the repository and must remain in a server-side APEX Web Credential.
+1. Create or select an Oracle APEX workspace with a clean parsing schema.
+2. Open **SQL Workshop → SQL Scripts** and run `f102_supporting_objects.sql`.
+3. Extract `f102.zip` to obtain the APEX application export.
+4. Open **App Builder → Import**, import the extracted `f102.sql`, and complete the application installation.
+5. For Live Test, create the required server-side APEX Web Credential and configure the provider settings in `ALV_CONFIG`. The API secret must remain in the Web Credential and must not be stored in SQL or source control.
 
-## Live-provider configuration
-
-Provider settings are read from `ALV_CONFIG`. The API secret remains in a server-side APEX Web Credential and is intentionally excluded from SQL, page source, screenshots, and this repository. The Live Test page displays its current readiness before a request is submitted.
+Run the supporting-objects script in a clean schema because it creates the application database objects.
 
 ## Scope and limitations
 
@@ -91,7 +99,7 @@ Provider settings are read from `ALV_CONFIG`. The API secret remains in a server
 - It assists human review; it is not a legal determination or a complete implementation of every beverage-label rule.
 - Provider results can be affected by blur, glare, perspective, crop, small text, network conditions, or model behavior.
 - The approximately five-second goal is a usability target, not a guaranteed service level.
-- Synchronous live batches are capped at 25; production-scale 200-300 image processing should use queued workers.
+- Synchronous live batches are capped at 25; production-scale processing of 200–300 images should use queued workers.
 - Public access is intended only for synthetic or non-sensitive take-home data. Production would require authentication, authorization, audit, scanning, and monitoring.
 
 ## Contact
