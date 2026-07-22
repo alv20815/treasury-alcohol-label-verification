@@ -1,6 +1,6 @@
 # AI-Powered Alcohol Label Verification Prototype
 
-**Deployed application:** [Open the prototype](https://g959119b7ca8101-emp.adb.us-ashburn-1.oraclecloudapps.com/ords/r/emp/ai-powered-alcohol-label-verification-app/home)  
+**Deployed application:** [Open the prototype](https://g959119b7ca8101-emp.adb.us-ashburn-1.oraclecloudapps.com/ords/r/emp/ai-powered-alcohol-label-verification-app/cover-page)  
 **Source repository:** [github.com/alv20815/treasury-alcohol-label-verification](https://github.com/alv20815/treasury-alcohol-label-verification)  
 **Assignment instructions:** [treasurytakehome-rgb/instructions](https://github.com/treasurytakehome-rgb/instructions)  
 **Design documentation:** [Approach, Tools, Assumptions, and Trade-offs](APPROACH_TOOLS_ASSUMPTIONS.md)
@@ -14,7 +14,7 @@ No local installation or Oracle APEX account is required to test the deployed pr
 3. Start with **Demo label scenarios** to see repeatable PASS, FAIL, and REVIEW outcomes, or run the **single-label**, **batch**, or **Live Test** workflow.
 4. Open a result to review the field-by-field comparison, confidence, explanation, timing, and export options.
 
-The test files are provided directly inside the deployed prototype, so reviewers do not need to locate an internal APEX page or download them from the source repository. For convenience, the test files (ZIP) are also provided in the GitHub repository. 
+The test files are provided directly inside the deployed prototype, so reviewers do not need to locate an internal APEX page or download them from the source repository. For convenience, the test files (ZIP) have also been provided in the GitHub repository (https://github.com/alv20815/treasury-alcohol-label-verification).
 
 ## What the prototype does
 
@@ -69,7 +69,7 @@ The repository is intentionally small:
 ```text
 README.md
 APPROACH_TOOLS_ASSUMPTIONS.md
-f102.sql
+f102.zip, which must be extracted to f102.sql before import.
 f102_supporting_objects.sql
 ```
 
