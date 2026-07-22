@@ -14,7 +14,7 @@ No local installation or Oracle APEX account is required to test the deployed pr
 3. Start with **Demo label scenarios** to see repeatable PASS, FAIL, and REVIEW outcomes, or run the **single-label**, **batch**, or **Live Test** workflow.
 4. Open a result to review the field-by-field comparison, confidence, explanation, timing, and export options.
 
-The test files are provided directly inside the deployed prototype, so reviewers do not need to locate an internal APEX page or download them from the source repository.
+The test files are provided directly inside the deployed prototype, so reviewers do not need to locate an internal APEX page or download them from the source repository. For convenience, the test files (ZIP) are also provided in the GitHub repository. 
 
 ## What the prototype does
 
