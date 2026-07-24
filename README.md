@@ -4,7 +4,6 @@
 **Source repository:** [github.com/alv20815/treasury-alcohol-label-verification](https://github.com/alv20815/treasury-alcohol-label-verification)  
 **Assignment instructions:** [treasurytakehome-rgb/instructions](https://github.com/treasurytakehome-rgb/instructions)  
 **Design documentation:** [Approach, Tools, Assumptions, and Trade-offs](APPROACH_TOOLS_ASSUMPTIONS.md)  
-**Last verified:** 2026-07-23
 
 ## Reviewer quick start
 
